@@ -15,6 +15,8 @@
             <input type="submit" value="Submit"/>
         </form>
     </div>
+    <div id="weather"></div>
+    <div id="error"></div>
     <script id="entry-template" type="text/x-handlebars-template">
           <h1>Weather</h1>
           <div class="body">
@@ -27,6 +29,14 @@
             </ul>
           </div>
     </script>
+    <script id="entry-template-err" type="text/x-handlebars-template">
+        <h1>Error</h1>
+        <div class="body">
+          <p>
+              Cause: {{message}}
+          </p>
+        </div>
+  </script>
 
 </body>
 </html>
