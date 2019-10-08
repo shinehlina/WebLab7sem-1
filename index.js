@@ -23,7 +23,6 @@ function getWeatherByCity() {
         )(json);
       }
     })
-    .then(jj => console.log("dd"))
     .catch(e => {
       var errorObject = {};
       errorObject.message = e;
