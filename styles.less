@@ -1,0 +1,20 @@
+@background-color: #000000;
+@text-color: #FFC0CB;
+@default-pedding: 15px;
+.bordered {
+  border-top: dotted 1px blue;
+  border-bottom: solid 2px blue;
+}
+
+.body{
+  background-color: @background-color;
+  color: @text-color;
+  padding: @default-pedding;
+}
+
+.error{
+  background-color: @text-color;
+  color: @background-color;
+  padding: @default-pedding + 5px;
+
+}
