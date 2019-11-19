@@ -14,6 +14,7 @@
     <div>
         <form id="form" class="form">
             <input id="city" type="text" size="40" placeholder="Enter your city">
+            <input class="button" type="submit"/>
         </form>
     </div>
     <div id="weather"></div>
@@ -23,10 +24,10 @@
           <div class="body">
             <ul>
                 <li>Main: {{weather.0.main}}</li>
-                <li>Temperature: {{main.temp}}</li>
-                <li>Wind: {{wind.speed}}</li>
-                <li>Presure: {{main.pressure}}</li>
-                <li>Humidity: {{main.humidity}}</li>
+                <li>Temperature: {{main.temp}} K</li>
+                <li>Wind: {{wind.speed}} m/c</li>
+                <li>Presure: {{main.pressure}} kPa</li>
+                <li>Humidity: {{main.humidity}}%</li>
             </ul>
           </div>
     </script>
