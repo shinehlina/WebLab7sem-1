@@ -11,14 +11,12 @@
 </head>
 
 <body>
-    <div>
-        <form id="form" class="form">
-            <input id="city" type="text" size="40" placeholder="Enter your city">
-            <input class="button" type="submit"/>
-        </form>
-    </div>
-    <div id="weather"></div>
-    <div id="error"></div>
+    <form id="form" class="form">
+        <input id="city" type="text" size="40" placeholder="Enter your city">
+        <input class="button" type="submit" />
+    </form>
+    <div id="result"></div>
+
     <script id="entry-template" type="text/x-handlebars-template">
           <h1>Weather</h1>
           <div class="body">
@@ -39,8 +37,8 @@
           </p>
         </div>
     </script>
-    <script src="index.js"></script>
 
+    <script src="index.js"></script>
 </body>
 
 </html>

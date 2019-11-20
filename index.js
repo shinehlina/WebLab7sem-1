@@ -1,37 +1,27 @@
 document.getElementById("form").addEventListener("submit", function(event) {
   event.preventDefault();
-  getWeatherByCity();
+  getWeatherByCity(event.target[0].value)
+    .then(json => renderCity(json))
+    .catch(e => setResult("entry-template-err", { message: e }));
 });
 
-function getWeatherByCity() {
-  document.getElementById("weather").innerHTML = "";
-  document.getElementById("error").innerHTML = "";
-  let clientKey = "ade7e1ffdaf68377d9167f51d8def411";
-  var city = document.getElementById("city").value;
-  return fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${clientKey}`
-  )
-    .then(data => data.json())
-    .then(json => {
-      if (json.cod === 200) {
-        document.getElementById("weather").innerHTML = prepareTemplate(
-          "entry-template"
-        )(json);
-      } else {
-        document.getElementById("error").innerHTML = prepareTemplate(
-          "entry-template-err"
-        )(json);
-      }
-    })
-    .catch(e => {
-      var errorObject = {};
-      errorObject.message = e;
-      document.getElementById("error").innerHTML = prepareTemplate(
-        "entry-template-err"
-      )(errorObject);
-    });
+function renderCity(json) {
+  if (json.cod === 200) {
+    setResult("entry-template", json);
+  } else {
+    setResult("entry-template-err", json);
+  }
 }
 
-function prepareTemplate(name) {
-  return Handlebars.compile(document.getElementById(name).innerHTML);
+function getWeatherByCity(cityName) {
+  let clientKey = "ade7e1ffdaf68377d9167f51d8def411";
+  return fetch(
+    `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${clientKey}`
+  ).then(data => data.json());
+}
+
+function setResult(templateName, json) {
+  document.getElementById("result").innerHTML = Handlebars.compile(
+    document.getElementById(templateName).innerHTML
+  )(json);
 }
