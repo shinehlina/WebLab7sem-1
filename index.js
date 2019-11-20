@@ -1,9 +1,11 @@
-document.getElementById("form").addEventListener("submit", function(event) {
+document.getElementById("form").addEventListener("submit", handleEvent);
+
+function handleEvent (event) {
   event.preventDefault();
   getWeatherByCity(event.target[0].value)
     .then(json => renderCity(json))
     .catch(e => setResult("entry-template-err", { message: e }));
-});
+}
 
 function renderCity(json) {
   if (json.cod === 200) {
