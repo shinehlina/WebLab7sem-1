@@ -4,3 +4,7 @@
 3. `lessc styles.less styles.css`
 
 После любого изменения в `styles.less` запустите `lessc styles.less styles.css`
+
+Для запуска тестов
+`npm install`
+`npm run test`
