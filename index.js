@@ -8,7 +8,7 @@ function getWeatherByCity() {
   document.getElementById("error").innerHTML = "";
   let clientKey = "ade7e1ffdaf68377d9167f51d8def411";
   return fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&APPID=${clientKey}`
+   `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${clientKey}`
   )
     .then(data => data.json())
     .then(json => {
