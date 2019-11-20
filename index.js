@@ -8,11 +8,13 @@ function getWeatherByCity() {
   document.getElementById("error").innerHTML = "";
   let clientKey = "ade7e1ffdaf68377d9167f51d8def411";
   var city = document.getElementById("city").value;
+  // console.log(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${clientKey}`)
   return fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${clientKey}`
+   `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${clientKey}`
   )
     .then(data => data.json())
     .then(json => {
+      console.log(data)
       if (json.cod === 200) {
         document.getElementById("weather").innerHTML = prepareTemplate(
           "entry-template"
@@ -24,6 +26,8 @@ function getWeatherByCity() {
       }
     })
     .catch(e => {
+      console.log("HERE")
+
       var errorObject = {};
       errorObject.message = e;
       document.getElementById("error").innerHTML = prepareTemplate(

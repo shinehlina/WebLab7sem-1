@@ -8,13 +8,16 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <script type='text/javascript' src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <title>Document</title>
+    <script src="./node_modules/mocha/mocha.js"></script>
+    <script src="./node_modules/chai/chai.js"></script>
+    <script src="./node_modules/sinon/pkg/sinon.js"></script>
 </head>
 
 <body>
     <div>
         <form id="form" class="form">
             <input id="city" type="text" size="40" placeholder="Enter your city">
-            <input class="button" type="submit"/>
+            <input class="button" type="submit" />
         </form>
     </div>
     <div id="weather"></div>
@@ -23,11 +26,11 @@
           <h1>Weather</h1>
           <div class="body">
             <ul>
-                <li>Main: {{weather.0.main}}</li>
-                <li>Temperature: {{main.temp}} K</li>
-                <li>Wind: {{wind.speed}} m/c</li>
-                <li>Presure: {{main.pressure}} kPa</li>
-                <li>Humidity: {{main.humidity}}%</li>
+                <li id="main">Main: {{weather.0.main}}</li>
+                <li id="temp">Temperature: {{main.temp}} K</li>
+                <li id="wind">Wind: {{wind.speed}} m/c</li>
+                <li id="pressure">Presure: {{main.pressure}} kPa</li>
+                <li id="hum">Humidity: {{main.humidity}}%</li>
             </ul>
           </div>
     </script>
@@ -40,6 +43,91 @@
         </div>
     </script>
     <script src="index.js"></script>
+
+    <div id="mocha"></div>
+    <script>
+        const data = {
+            coord: { lon: -0.13, lat: 51.51 },
+            weather: [
+                {
+                    main: "Drizzle"
+                }
+            ],
+            main: {
+                temp: 280.32,
+                pressure: 1012,
+                humidity: 81
+            },
+            wind: { speed: 4.1 },
+            cod: 200,
+            message: ""
+        };
+        describe("Fetch data success_ii", function () {
+            beforeEach(async function () {
+                document.getElementById("city").value = "Moscow"
+                window.fetch = sinon.stub();
+                function mockApiResponse(body = {}) {
+                    return new window.Response(JSON.stringify(body), {
+                        status: 200,
+                        headers: { 'Content-type': 'application/json' }
+                    });
+                }
+                window.fetch.returns(Promise.resolve(mockApiResponse(data)));
+
+                await getWeatherByCity()
+            });
+
+            it("Contsins main", function () {
+                chai.assert.include(document.getElementById("main").innerHTML, "Main: Drizzle");
+            });
+
+            it("Contains temperature", function () {
+                chai.assert.include(document.getElementById("temp").innerHTML, "Temperature: 280.32 K");
+            });
+
+            it("Contains wind", function () {
+                chai.assert.include(document.getElementById("wind").innerHTML, "Wind: 4.1 m/c");
+            });
+
+            it("Contains pressure", function () {
+                chai.assert.include(document.getElementById("pressure").innerHTML, "Presure: 1012 kPa");
+            });
+
+            it("Contains humidity", function () {
+                chai.assert.include(document.getElementById("hum").innerHTML, "Humidity: 81%");
+            });
+
+            it("Error is empty", function () {
+                chai.expect(document.getElementById("error")).to.be.empty;
+            });
+        });
+
+        describe("Fetch data not found", function () {
+            beforeEach(async function () {
+                document.getElementById("city").value = "Moscow"
+                window.fetch = sinon.stub();
+                function mockApiResponse(body = {}) {
+                    return new window.Response(JSON.stringify({ message: "Bad bad error" }), {
+                        status: 404,
+                        headers: { 'Content-type': 'application/json' }
+                    });
+                }
+                window.fetch.returns(Promise.resolve(mockApiResponse(data)));
+
+                await getWeatherByCity()
+            });
+
+            it("Weather is empty", function () {
+                chai.expect(document.getElementById("weather")).to.be.empty;
+            });
+
+            it("Error not empty", function () {
+                chai.assert.include(document.getElementById("error").innerHTML, "Bad bad error");
+            });
+
+        });
+        mocha.run();
+    </script>
 
 </body>
 

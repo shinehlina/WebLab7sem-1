@@ -1,0 +1,26 @@
+{
+  "name": "weblab7sem-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha-chrome index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinehlina/WebLab7sem-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shinehlina/WebLab7sem-1/issues"
+  },
+  "homepage": "https://github.com/shinehlina/WebLab7sem-1#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0",
+    "mocha-chrome": "^2.2.0"
+  }
+}
